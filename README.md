@@ -37,11 +37,13 @@ Add the `BadBot` middelware to your `bootstrap\app.php` file (see the [official 
     $middleware->append(xqus\BadBot\Middleware\BadBotMiddleware::class);
 })
 ```
-To enable dynamic robots.txt run 
+To build a new robots.txt run
 
 ```bash
-php artisan badbot:install-robots-txt
+php artisan badbot:update-txt
 ```
+
+Be aware that this command overwrites your current `public/robots.txt` file. 
 
 ## Testing
 
