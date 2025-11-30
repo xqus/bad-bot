@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 class InstallRobotsTxt extends Command
 {
-    public $signature = 'badbot:clear-ip';
+    public $signature = 'badbot:install-robots-txt';
 
     public $description = 'Remove IP mark';
 
