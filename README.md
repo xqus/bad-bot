@@ -1,9 +1,9 @@
 # BadBot for Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/xqus/bad-bot.svg?style=flat-square)](https://packagist.org/packages/xqus/bad-bot)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/xqus/bad-bot/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/xqus/bad-bot/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/xqus/bad-bot/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/xqus/bad-bot/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/xqus/bad-bot.svg?style=flat-square)](https://packagist.org/packages/xqus/bad-bot)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/xqus/bad-bot.svg?style=flat)](https://packagist.org/packages/xqus/bad-bot)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/xqus/bad-bot/run-tests.yml?branch=main&label=tests&style=flat)](https://github.com/xqus/bad-bot/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/xqus/bad-bot/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat)](https://github.com/xqus/bad-bot/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/xqus/bad-bot.svg?style=flat)](https://packagist.org/packages/xqus/bad-bot)
 
 BadBot for Laravel is a pacakge that block bad crawlers, AI agents, people trying to scrape your website or high-usage users, while still lets good and important crawlers such as GoogleBot and Bing pass-thru.
 
