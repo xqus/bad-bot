@@ -19,7 +19,7 @@ class BadBotMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(strtolower($request->getRequestUri()) == '/robots.txt') {
+        if (strtolower($request->getRequestUri()) == '/robots.txt') {
             return $next($request);
         }
 
