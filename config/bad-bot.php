@@ -20,11 +20,11 @@ return [
         'ImagesiftBot',
         'Omgilibot',
         'Omgili',
-        'YouBot'
+        'YouBot',
     ],
 
     'allow-list' => [
         'Googlebot' => 'google',
     ],
-    
+
 ];

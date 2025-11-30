@@ -30,12 +30,11 @@ class BadBotMiddleware
         $isBadBot = false;
 
         $isKnownBadBot = $this->isKnownBadBot($request);
-        if($isKnownBadBot) {
+        if ($isKnownBadBot) {
             $isBadBot = true;
         } else {
             $isAllowedBot = $this->isAllowedBot($request);
         }
-        
 
         $endTime = microtime(true);
         Log::debug('Handled incoming request in '.round($endTime - $startTime, 5).' seconds.');
@@ -60,19 +59,21 @@ class BadBotMiddleware
         $allowedUserAgents = collect(config('bad-bot.allow-list'));
 
         $isKnown = $allowedUserAgents->contains(function ($value, $key) use ($request, $userAgent) {
-            if(! str_contains(strtolower($userAgent), strtolower($key))) {
+            if (! str_contains(strtolower($userAgent), strtolower($key))) {
                 return false;
             }
 
             $hostname = gethostbyaddr($request->ip());
             $isRealBot = str_contains(strtolower($hostname), strtolower($value));
 
-            if(! $isRealBot) {
+            if (! $isRealBot) {
                 Log::warning('Fake bot identified.', ['hostname' => $hostname]);
+
                 return false;
             }
 
             Log::notice('Whitelisted bot identified.', ['hostname' => $hostname]);
+
             return true;
         });
 
