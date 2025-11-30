@@ -3,8 +3,6 @@
 use Illuminate\Http\Request;
 use xqus\BadBot\Middleware\UserAgentMiddleWare;
 
-
-
 test('requests are handled', function () {
     $middleware = new UserAgentMiddleWare;
     $request = new Request;
@@ -16,7 +14,7 @@ test('requests are handled', function () {
     $response = $middleware->handle($request, $next);
 
     $this->assertEquals('This is a secret place', $response->getContent());
- 
+
 });
 
 test('a user agent on the deny list is blocked', function () {
@@ -29,8 +27,8 @@ test('a user agent on the deny list is blocked', function () {
     };
 
     try {
-        $response = $middleware->handle($request, $next);        
-    } catch(Exception $e) {
+        $response = $middleware->handle($request, $next);
+    } catch (Exception $e) {
         dump($e);
         $this->assertEquals(503, $e->getStatusCode());
     }
@@ -46,8 +44,8 @@ test('a user agent is matched properly', function () {
     };
 
     try {
-        $response = $middleware->handle($request, $next);        
-    } catch(Exception $e) {
+        $response = $middleware->handle($request, $next);
+    } catch (Exception $e) {
         dump($e);
         $this->assertEquals(503, $e->getStatusCode());
     }
