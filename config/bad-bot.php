@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'block-known-bad-bots' => false,
 
     'deny-list' => [
         'GPTBot',
@@ -24,7 +23,8 @@ return [
     ],
 
     'allow-list' => [
-        'Googlebot' => 'google',
+        'Googlebot' => 'googlebot.com',
+        'AhrefsBot' => 'ahrefs.net',
     ],
 
 ];

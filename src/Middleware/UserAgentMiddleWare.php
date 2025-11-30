@@ -4,13 +4,11 @@ namespace xqus\BadBot\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use PhpIP\IPBlock;
 use Symfony\Component\HttpFoundation\Response;
 use xqus\BadBot\BadBotLog as Log;
 
-class BadBotMiddleware
-{
+class UserAgentMiddleWare {
+
     /**
      * Handle an incoming request.
      *
@@ -18,28 +16,26 @@ class BadBotMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $isKnownBadBot = $this->isKnownBadIPAddress($request);
+        $isKnownBadBot = $this->isKnownBadUserAgent($request);
 
         if ($isKnownBadBot === false) {
             return $next($request);
         }
 
-        Log::notice('Request blocked by IP rule');
+        Log::notice('Request blocked based on user agent');
         abort(429);
 
         return $next($request);
     }
 
-    
-
-    private function isKnownBadIPAddress(Request $request): bool
+    private function isKnownBadUserAgent(Request $request): bool
     {
-        $blockedIPRanges = collect(Cache::get('badbot-blocked-ips', []));
+        $userAgent = $request->header('User-Agent');
 
-        $isKnown = $blockedIPRanges->contains(function ($value) use ($request) {
-            $ipBlock = IPBlock::create($value);
+        $knownUserAgents = collect(config('bad-bot.deny-list'));
 
-            return $ipBlock->contains($request->ip());
+        $isKnown = $knownUserAgents->contains(function ($value) use ($userAgent) {
+            return str_contains(strtolower($userAgent), strtolower($value));
         });
 
         return $isKnown;
