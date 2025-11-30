@@ -30,8 +30,6 @@ class BadBotMiddleware
         return $next($request);
     }
 
-    
-
     private function isKnownBadIPAddress(Request $request): bool
     {
         $blockedIPRanges = collect(Cache::get('badbot-blocked-ips', []));

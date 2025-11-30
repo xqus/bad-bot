@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use xqus\BadBot\BadBotLog as Log;
 
-class UserAgentMiddleWare {
-
+class UserAgentMiddleWare
+{
     /**
      * Handle an incoming request.
      *
