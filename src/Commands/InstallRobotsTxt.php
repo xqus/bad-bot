@@ -2,7 +2,6 @@
 
 namespace xqus\BadBot\Commands;
 
-use Exception;
 use Illuminate\Console\Command;
 
 class InstallRobotsTxt extends Command
@@ -15,8 +14,9 @@ class InstallRobotsTxt extends Command
     {
         $publicRobotsTxtFilePath = public_path('robots.txt');
         $robotsTxt = view('bad-bot::robots')->render();
-        
+
         file_put_contents($publicRobotsTxtFilePath, $robotsTxt, LOCK_EX);
+
         return self::SUCCESS;
     }
 }

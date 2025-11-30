@@ -10,7 +10,8 @@ class UnBlockIP extends Command
 
     public $description = 'Unmark an IP addresses or IP range as a bad bot.';
 
-    public function handle(): int {
+    public function handle(): int
+    {
         return self::SUCCESS;
     }
 }
