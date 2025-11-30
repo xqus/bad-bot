@@ -13,7 +13,11 @@ class InstallRobotsTxt extends Command
     public function handle(): int
     {
         $publicRobotsTxtFilePath = public_path('robots.txt');
-        $robotsTxt = view('bad-bot::robots')->render();
+
+        /** @var view-string $viewName */
+        $viewName = 'bad-bot::robots';
+        
+        $robotsTxt = view($viewName)->render();
 
         file_put_contents($publicRobotsTxtFilePath, $robotsTxt, LOCK_EX);
 
