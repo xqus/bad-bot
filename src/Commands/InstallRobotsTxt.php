@@ -16,7 +16,7 @@ class InstallRobotsTxt extends Command
 
         /** @var view-string $viewName */
         $viewName = 'bad-bot::robots';
-        
+
         $robotsTxt = view($viewName)->render();
 
         file_put_contents($publicRobotsTxtFilePath, $robotsTxt, LOCK_EX);
