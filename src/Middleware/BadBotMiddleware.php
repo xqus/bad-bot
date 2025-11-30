@@ -19,6 +19,10 @@ class BadBotMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(strtolower($request->getRequestUri()) == '/robots.txt') {
+            return $next($request);
+        }
+
         $requestId = (string) Str::uuid();
 
         Log::withContext([
