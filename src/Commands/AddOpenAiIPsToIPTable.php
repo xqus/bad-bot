@@ -2,7 +2,6 @@
 
 namespace xqus\BadBot\Commands;
 
-use Exception;
 use Illuminate\Console\Command;
 
 class AddOpenAiIPsToIPTable extends Command
@@ -11,8 +10,5 @@ class AddOpenAiIPsToIPTable extends Command
 
     public $description = 'Update the list of known OpenAI IP addresses';
 
-    public function handle(): int
-    {
-        
-    }
+    public function handle(): int {}
 }

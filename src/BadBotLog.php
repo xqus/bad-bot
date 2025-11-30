@@ -4,7 +4,8 @@ namespace xqus\BadBot;
 
 use Illuminate\Support\Facades\Log;
 
-class BadBotLog {
+class BadBotLog
+{
     public static function debug($message, $context = [])
     {
         Log::debug($message, self::addContext($context));

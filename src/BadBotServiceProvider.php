@@ -4,10 +4,10 @@ namespace xqus\BadBot;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use xqus\BadBot\Commands\InstallRobotsTxt;
 use xqus\BadBot\Commands\AddOpenAiIPsToIPTable;
 use xqus\BadBot\Commands\BlockIP;
 use xqus\BadBot\Commands\ClearAllIPMarks;
+use xqus\BadBot\Commands\InstallRobotsTxt;
 
 class BadBotServiceProvider extends PackageServiceProvider
 {
@@ -22,7 +22,7 @@ class BadBotServiceProvider extends PackageServiceProvider
                 BlockIP::class,
                 InstallRobotsTxt::class,
                 AddOpenAiIPsToIPTable::class,
-                ClearAllIPMarks::class,                
+                ClearAllIPMarks::class,
             ]);
     }
 }

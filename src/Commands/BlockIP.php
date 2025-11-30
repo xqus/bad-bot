@@ -2,8 +2,8 @@
 
 namespace xqus\BadBot\Commands;
 
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use PhpIP\IPBlock;
 
 class BlockIP extends Command
@@ -16,14 +16,14 @@ class BlockIP extends Command
     {
         $inputIp = $this->argument('ip');
 
-        if(strpos($inputIp, '/') === false) {
+        if (strpos($inputIp, '/') === false) {
             $inputIp = $inputIp.'/32';
         }
 
         $ipBlock = IPBlock::create($inputIp);
 
         $blockedIPRanges = collect(Cache::get('badbot-blocked-ips', []));
-        
+
         $blockedIPRanges->put($inputIp, $inputIp);
         Cache::put('badbot-blocked-ips', $blockedIPRanges);
 
