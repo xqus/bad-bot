@@ -1,6 +1,6 @@
 {
     "name": "xqus/bad-bot",
-    "description": "BadBot for Laravel is a pacakge that block bad crawlers, AI agents, people trying to scrape your website or high-usage users, while still lets good and important crawlers such as GoogleBot and Bing pass-thru.",
+    "description": "A lightweight package that blocks unwanted crawlers, AI agents, scrapers, and high‑frequency visitors while allowing legitimate bots such as Googlebot and Bingbot to pass.",
     "keywords": [
         "xqus",
         "laravel",

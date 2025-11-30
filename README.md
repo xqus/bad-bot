@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/xqus/bad-bot/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat)](https://github.com/xqus/bad-bot/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/xqus/bad-bot.svg?style=flat)](https://packagist.org/packages/xqus/bad-bot)
 
-BadBot for Laravel is a pacakge that block bad crawlers, AI agents, people trying to scrape your website or high-usage users, while still lets good and important crawlers such as GoogleBot and Bing pass-thru.
+A lightweight package that blocks unwanted crawlers, AI agents, scrapers, and high‑frequency visitors while allowing legitimate bots such as Googlebot and Bingbot to pass.
 
 
 ## Installation
