@@ -1,7 +1,9 @@
 <?php
 
 return [
-    'user-agents' => [
+    'block-known-bad-bots' => false,
+
+    'deny-list' => [
         'GPTBot',
         'ChatGPT-User',
         'Google-Extended',
@@ -18,8 +20,11 @@ return [
         'ImagesiftBot',
         'Omgilibot',
         'Omgili',
-        'YouBot',
+        'YouBot'
     ],
 
-    'block-known-bad-bots' => false,
+    'allow-list' => [
+        'Googlebot' => 'google',
+    ],
+    
 ];

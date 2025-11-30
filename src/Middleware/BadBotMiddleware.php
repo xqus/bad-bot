@@ -26,12 +26,21 @@ class BadBotMiddleware
         ]);
 
         $startTime = microtime(true);
+
+        $isBadBot = false;
+
         $isKnownBadBot = $this->isKnownBadBot($request);
+        if($isKnownBadBot) {
+            $isBadBot = true;
+        } else {
+            $isAllowedBot = $this->isAllowedBot($request);
+        }
+        
 
         $endTime = microtime(true);
         Log::debug('Handled incoming request in '.round($endTime - $startTime, 5).' seconds.');
 
-        if (! $isKnownBadBot) {
+        if ($isBadBot === false) {
             return $next($request);
         }
 
@@ -43,6 +52,31 @@ class BadBotMiddleware
         Log::warning('Bad bot identified but was not blocked');
 
         return $next($request);
+    }
+
+    private function isAllowedBot(Request $request): bool
+    {
+        $userAgent = $request->header('User-Agent');
+        $allowedUserAgents = collect(config('bad-bot.allow-list'));
+
+        $isKnown = $allowedUserAgents->contains(function ($value, $key) use ($request, $userAgent) {
+            if(! str_contains(strtolower($userAgent), strtolower($key))) {
+                return false;
+            }
+
+            $hostname = gethostbyaddr($request->ip());
+            $isRealBot = str_contains(strtolower($hostname), strtolower($value));
+
+            if(! $isRealBot) {
+                Log::warning('Fake bot identified.', ['hostname' => $hostname]);
+                return false;
+            }
+
+            Log::notice('Whitelisted bot identified.', ['hostname' => $hostname]);
+            return true;
+        });
+
+        return false;
     }
 
     private function isKnownBadBot(Request $request): bool
@@ -62,7 +96,7 @@ class BadBotMiddleware
     {
         $userAgent = $request->header('User-Agent');
 
-        $knownUserAgents = collect(config('bad-bot.user-agents'));
+        $knownUserAgents = collect(config('bad-bot.deny-list'));
 
         $isKnown = $knownUserAgents->contains(function ($value) use ($userAgent) {
             return str_contains(strtolower($userAgent), strtolower($value));
