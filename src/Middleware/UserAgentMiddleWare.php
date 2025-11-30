@@ -24,8 +24,6 @@ class UserAgentMiddleWare
 
         Log::notice('Request blocked based on user agent');
         abort(403);
-
-        return $next($request);
     }
 
     private function isKnownBadUserAgent(Request $request): bool
