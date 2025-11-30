@@ -45,7 +45,6 @@ test('a user agent is matched properly', function () {
     try {
         $response = $middleware->handle($request, $next);
     } catch (Exception $e) {
-        dump($e);
         $this->assertEquals(403, $e->getStatusCode());
     }
 });
