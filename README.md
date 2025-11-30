@@ -30,11 +30,13 @@ php artisan vendor:publish --tag="bad-bot-views"
 
 ## Usage
 
-Add the `BadBot` middelware to your `bootstrap\app.php` file (see the [official documentation](https://laravel.com/docs/12.x/middleware#global-middleware))
+Add the middelware you want to run to your `bootstrap\app.php` file (see the [official documentation](https://laravel.com/docs/12.x/middleware#global-middleware))
 
 ```php
 ->withMiddleware(function (Middleware $middleware): void {
-    $middleware->append(xqus\BadBot\Middleware\BadBotMiddleware::class);
+    $middleware->append(xqus\BadBot\Middleware\BadBotMiddleware::class); // blocks marked ip addresses
+    $middleware->append(xqus\BadBot\Middleware\ThrottleMiddleware::class); // blocks noisy bots, but allows whitelisted bots (Google, Bing, etc)
+    $middleware->append(xqus\BadBot\Middleware\UserAgentMiddleWare::class); // blocks bots based on user-agent
 })
 ```
 To build a new robots.txt run
