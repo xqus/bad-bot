@@ -23,7 +23,7 @@ class UserAgentMiddleWare
         }
 
         Log::notice('Request blocked based on user agent');
-        abort(503);
+        abort(403);
 
         return $next($request);
     }

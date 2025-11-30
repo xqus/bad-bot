@@ -30,7 +30,7 @@ test('a user agent on the deny list is blocked', function () {
         $response = $middleware->handle($request, $next);
     } catch (Exception $e) {
         dump($e);
-        $this->assertEquals(503, $e->getStatusCode());
+        $this->assertEquals(403, $e->getStatusCode());
     }
 });
 
@@ -47,6 +47,6 @@ test('a user agent is matched properly', function () {
         $response = $middleware->handle($request, $next);
     } catch (Exception $e) {
         dump($e);
-        $this->assertEquals(503, $e->getStatusCode());
+        $this->assertEquals(403, $e->getStatusCode());
     }
 });
