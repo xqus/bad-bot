@@ -29,7 +29,6 @@ test('a user agent on the deny list is blocked', function () {
     try {
         $response = $middleware->handle($request, $next);
     } catch (Exception $e) {
-        dump($e);
         $this->assertEquals(403, $e->getStatusCode());
     }
 });
