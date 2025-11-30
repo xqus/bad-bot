@@ -8,7 +8,7 @@ use PhpIP\IPBlock;
 
 class BlockIP extends Command
 {
-    public $signature = 'badbot:mark-ip {ip : IP or range to block. For example 132.196.86.0/24}';
+    public $signature = 'badbot:block {ip : IP or range to block. For example 132.196.86.0/24}';
 
     public $description = 'Mark an IP addresses or IP range as a bad bot.';
 

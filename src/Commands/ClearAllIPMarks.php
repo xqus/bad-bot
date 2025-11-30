@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 class ClearAllIPMarks extends Command
 {
-    public $signature = 'badbot:clear-all-ip-marks';
+    public $signature = 'badbot:clear';
 
     public $description = 'Clear all bad bot IPs';
 
