@@ -26,8 +26,6 @@ class BadBotMiddleware
 
         Log::notice('Request blocked by IP rule');
         abort(429);
-
-        return $next($request);
     }
 
     private function isKnownBadIPAddress(Request $request): bool
