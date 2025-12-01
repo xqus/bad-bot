@@ -4,6 +4,7 @@ namespace xqus\BadBot\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
 
 class RequestBlockedByUserAgent
@@ -13,5 +14,7 @@ class RequestBlockedByUserAgent
     /**
      * Create a new event instance.
      */
-    public function __construct() {}
+    public function __construct(
+        public Request $request
+    ) {}
 }
