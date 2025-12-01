@@ -85,3 +85,10 @@ test('an event is dispatched when a request is rate limited', function () {
 
     Event::assertDispatched(RequestRateLimited::class);
 });
+
+test('whtelisted user agents can skip rate limit', function() {});
+test('event is fired when whtelisted user agents skip rate limit', function() {});
+test('failing reverse dns lookup enables rate limit', function() {});
+test('failing reverse dns lookup fires an event', function() {});
+test('post requests are not rate limited', function() {});
+
