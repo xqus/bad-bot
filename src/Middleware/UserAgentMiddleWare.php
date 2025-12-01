@@ -3,7 +3,6 @@
 namespace xqus\BadBot\Middleware;
 
 use Closure;
-
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use xqus\BadBot\Events\RequestBlockedByUserAgent;

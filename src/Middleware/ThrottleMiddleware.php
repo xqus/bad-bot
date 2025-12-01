@@ -37,10 +37,12 @@ class ThrottleMiddleware
             }
 
             RequestRateLimitSkipped::dispatch($request);
+
             return $next($request);
         }
 
         RateLimiter::increment($rateLimiterkey);
+
         return $next($request);
     }
 
@@ -52,6 +54,7 @@ class ThrottleMiddleware
 
         if (! $this->userAgentIpValidated($request->header('User-Agent'), $request->ip())) {
             UserAgentDnsValidationFailed::dispatch($request);
+
             return false;
         }
 
@@ -75,6 +78,7 @@ class ThrottleMiddleware
         })->first();
 
         $resolvedHostname = gethostbyaddr($ipAddress);
+
         return str_contains(strtolower($resolvedHostname), strtolower($allowedHostname));
     }
 }
