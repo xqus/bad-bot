@@ -45,7 +45,7 @@ test('authenticated requests can skip rate limit', function () {
 
     Artisan::call('migrate', ['--path' => __DIR__.'/Support/database/migrations/create_users_table.php', '--realpath' => true]);
     $user = User::factory()->create();
-    Config::set('rate-limit-authenticated-requests', false);
+    Config::set('skip-rate-limit-authenticated-requests', true);
 
     $response = $this->actingAs($user)->get('/rate-limit');
     $limit = 10;
@@ -62,7 +62,7 @@ test('authenticated requests can be rate limited', function () {
 
     Artisan::call('migrate', ['--path' => __DIR__.'/Support/database/migrations/create_users_table.php', '--realpath' => true]);
     $user = User::factory()->create();
-    Config::set('rate-limit-authenticated-requests', true);
+    Config::set('skip-rate-limit-authenticated-requests', false);
 
     $response = $this->actingAs($user)->get('/rate-limit');
     $limit = 10;

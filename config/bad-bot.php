@@ -2,6 +2,8 @@
 
 return [
 
+    'skip-rate-limit-authenticated-requests' => env('BADBOT_SKIP_AUTH_REQUESTS', true),
+
     'deny-list' => [
         'GPTBot',
         'ChatGPT-User',
