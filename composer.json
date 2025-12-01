@@ -43,6 +43,7 @@
     "autoload-dev": {
         "psr-4": {
             "xqus\\BadBot\\Tests\\": "tests/",
+            "Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
