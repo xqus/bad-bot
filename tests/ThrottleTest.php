@@ -6,6 +6,7 @@ use xqus\BadBot\Events\RequestRateLimited;
 use xqus\BadBot\Middleware\ThrottleMiddleware;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
 use Tests\Support\Models\User;
 
 pest()->use(RefreshDatabase::class);
@@ -38,11 +39,12 @@ test('requests are throttled', function () {
     $this->assertEquals(429,  $response->getStatusCode());
 });
 
-test('authenticated requests are not rate limited', function () {
+test('authenticated requests can skip rate limit', function () {
     Event::fake();
 
     Artisan::call('migrate', ['--path' => __DIR__ . '/Support/database/migrations/create_users_table.php', '--realpath' => true]);
     $user = User::factory()->create();
+    Config::set('rate-limit-authenticated-requests', false);
 
     $response = $this->actingAs($user)->get('/rate-limit');
     $limit = 10;
@@ -52,6 +54,23 @@ test('authenticated requests are not rate limited', function () {
     }
 
     $this->assertEquals(200,  $response->getStatusCode());
+});
+
+test('authenticated requests can be rate limited', function () {
+    Event::fake();
+
+    Artisan::call('migrate', ['--path' => __DIR__ . '/Support/database/migrations/create_users_table.php', '--realpath' => true]);
+    $user = User::factory()->create();
+    Config::set('rate-limit-authenticated-requests', true);
+
+    $response = $this->actingAs($user)->get('/rate-limit');
+    $limit = 10;
+
+    for($i=0; $i<$limit; $i++) {
+        $response = $this->actingAs($user)->get('/rate-limit');    
+    }
+
+    $this->assertEquals(429,  $response->getStatusCode());
 });
 
 test('an event is dispatched when a request is rate limited', function () {
