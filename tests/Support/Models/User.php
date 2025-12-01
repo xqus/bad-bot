@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tests\Support\database\Factories\UserFactory;
 
-
 class User extends Authenticatable
 {
     use HasFactory;
