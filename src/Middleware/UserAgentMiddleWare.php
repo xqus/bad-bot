@@ -5,7 +5,6 @@ namespace xqus\BadBot\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use xqus\BadBot\BadBotLog as Log;
 use xqus\BadBot\Events\RequestBlockedByUserAgent;
 
 class UserAgentMiddleWare
