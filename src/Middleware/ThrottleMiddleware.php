@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\RateLimiter;
 use Symfony\Component\HttpFoundation\Response;
 use xqus\BadBot\BadBotLog as Log;
 use xqus\BadBot\Events\RequestRateLimited;
+use xqus\BadBot\Events\RequestRateLimitSkipped;
+use xqus\BadBot\Events\UserAgentDnsValidationFailed;
 
 class ThrottleMiddleware
 {
@@ -34,10 +36,8 @@ class ThrottleMiddleware
                 abort(429);
             }
 
-            Log::notice('Rate limited request allowed. Reason: Whitelisted user-agent.');
-
+            RequestRateLimitSkipped::dispatch($request);
             return $next($request);
-
         }
 
         RateLimiter::increment($rateLimiterkey);
@@ -52,8 +52,7 @@ class ThrottleMiddleware
         }
 
         if (! $this->userAgentIpValidated($request->header('User-Agent'), $request->ip())) {
-            Log::warning('Hostname does not match expected hostname for whitelisted user-agent.');
-
+            UserAgentDnsValidationFailed::dispatch($request);
             return false;
         }
 
