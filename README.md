@@ -34,9 +34,11 @@ Add the middelware you want to run to your `bootstrap\app.php` file (see the [of
 
 ```php
 ->withMiddleware(function (Middleware $middleware): void {
-    $middleware->append(xqus\BadBot\Middleware\BadBotMiddleware::class); // blocks marked ip addresses
-    $middleware->append(xqus\BadBot\Middleware\ThrottleMiddleware::class); // blocks noisy bots, but allows whitelisted bots (Google, Bing, etc)
-    $middleware->append(xqus\BadBot\Middleware\UserAgentMiddleWare::class); // blocks bots based on user-agent
+    $middleware->appendToGroup('web', [
+        xqus\BadBot\Middleware\BadBotMiddleware::class, // blocks marked ip addresses
+        xqus\BadBot\Middleware\ThrottleMiddleware::class, // blocks noisy bots, but allows whitelisted bots (Google, Bing, etc)
+        xqus\BadBot\Middleware\UserAgentMiddleWare::class // blocks bots based on user-agent
+    ]);
 })
 ```
 To build a new robots.txt run
