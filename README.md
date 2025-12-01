@@ -47,6 +47,16 @@ php artisan badbot:update-txt
 
 Be aware that this command overwrites your current `public/robots.txt` file. 
 
+### Custom error handling
+
+By default an exception extending `Symfony\Component\HttpKernel\Exception\HttpException` will be called when an request is blocked. This will render the default HTTP error page for that error code. 
+
+If you want to handle errors differently the following exceptions exists: 
+```
+xqus\BadBot\Exceptions\RequestRateLimitedException
+xqus\BadBot\Exceptions\UserAgentBlockedException
+```
+
 ## Testing
 
 ```bash
