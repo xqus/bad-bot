@@ -21,7 +21,7 @@ class ThrottleMiddleware
      */
     public function handle(Request $request, Closure $next, int $perMinute = 5): Response
     {
-        if (Auth::check() && config('skip-rate-limit-authenticated-requests', true)) {
+        if (Auth::check() && config('bad-bot.skip-rate-limit-authenticated-requests', true)) {
             return $next($request);
         }
 
