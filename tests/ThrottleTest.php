@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Tests\Support\Models\User;
 use xqus\BadBot\Events\RequestRateLimited;
+use xqus\BadBot\Events\RequestRateLimitSkipped;
+use xqus\BadBot\Events\UserAgentDnsValidationFailed;
 use xqus\BadBot\Middleware\ThrottleMiddleware;
 
 pest()->use(RefreshDatabase::class);
@@ -85,8 +87,60 @@ test('an event is dispatched when a request is rate limited', function () {
     Event::assertDispatched(RequestRateLimited::class);
 });
 
-test('whtelisted user agents can skip rate limit', function () {});
-test('event is fired when whtelisted user agents skip rate limit', function () {});
-test('failing reverse dns lookup enables rate limit', function () {});
-test('failing reverse dns lookup fires an event', function () {});
-test('post requests are not rate limited', function () {});
+test('whtelisted user agents can skip rate limit', function () {
+    $limit = 10;
+
+    for ($i = 0; $i < $limit; $i++) {
+        $response = $this->withHeaders([
+            'REMOTE_ADDR' => '198.244.240.250',
+            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)'
+        ])->get('/rate-limit');
+    }
+
+    $this->assertEquals(200, $response->getStatusCode());
+});
+
+test('event is fired when whtelisted user agents skip rate limit', function () {
+    Event::fake();
+
+    $limit = 10;
+
+    for ($i = 0; $i < $limit; $i++) {
+        $response = $this->withHeaders([
+            'REMOTE_ADDR' => '198.244.240.250',
+            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)'
+        ])->get('/rate-limit');
+    }
+
+    Event::assertDispatched(RequestRateLimitSkipped::class);
+});
+
+test('failing reverse dns lookup enables rate limit', function () {
+    $limit = 10;
+
+    for ($i = 0; $i < $limit; $i++) {
+        $response = $this->withHeaders([
+            'REMOTE_ADDR' => '127.0.0.1',
+            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)'
+        ])->get('/rate-limit');
+    }
+
+    $this->assertEquals(429, $response->getStatusCode());
+});
+
+test('failing reverse dns lookup fires an event', function () {
+    Event::fake();
+
+    $limit = 10;
+
+    for ($i = 0; $i < $limit; $i++) {
+        $response = $this->withHeaders([
+            'REMOTE_ADDR' => '127.0.0.1',
+            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)'
+        ])->get('/rate-limit');
+    }
+
+    Event::assertDispatched(UserAgentDnsValidationFailed::class);
+});
+
+test('post requests are not rate limited', function () {})->skip();
