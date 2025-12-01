@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use PhpIP\IPBlock;
 use Symfony\Component\HttpFoundation\Response;
-use xqus\BadBot\BadBotLog as Log;
 
 class BadBotMiddleware
 {
@@ -24,7 +23,6 @@ class BadBotMiddleware
             return $next($request);
         }
 
-        Log::notice('Request blocked by IP rule');
         abort(429);
     }
 
