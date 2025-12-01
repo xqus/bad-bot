@@ -93,7 +93,7 @@ test('whtelisted user agents can skip rate limit', function () {
     for ($i = 0; $i < $limit; $i++) {
         $response = $this->withHeaders([
             'REMOTE_ADDR' => '198.244.240.250',
-            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)'
+            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)',
         ])->get('/rate-limit');
     }
 
@@ -108,7 +108,7 @@ test('event is fired when whtelisted user agents skip rate limit', function () {
     for ($i = 0; $i < $limit; $i++) {
         $response = $this->withHeaders([
             'REMOTE_ADDR' => '198.244.240.250',
-            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)'
+            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)',
         ])->get('/rate-limit');
     }
 
@@ -121,7 +121,7 @@ test('failing reverse dns lookup enables rate limit', function () {
     for ($i = 0; $i < $limit; $i++) {
         $response = $this->withHeaders([
             'REMOTE_ADDR' => '127.0.0.1',
-            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)'
+            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)',
         ])->get('/rate-limit');
     }
 
@@ -136,7 +136,7 @@ test('failing reverse dns lookup fires an event', function () {
     for ($i = 0; $i < $limit; $i++) {
         $response = $this->withHeaders([
             'REMOTE_ADDR' => '127.0.0.1',
-            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)'
+            'User-Agent' => 'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)',
         ])->get('/rate-limit');
     }
 

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Symfony\Component\HttpFoundation\Response;
-use xqus\BadBot\BadBotLog as Log;
 use xqus\BadBot\Events\RequestRateLimited;
 use xqus\BadBot\Events\RequestRateLimitSkipped;
 use xqus\BadBot\Events\UserAgentDnsValidationFailed;
@@ -37,6 +36,7 @@ class ThrottleMiddleware
             }
 
             RequestRateLimitSkipped::dispatch($request);
+
             return $next($request);
         }
 
@@ -53,6 +53,7 @@ class ThrottleMiddleware
 
         if (! $this->userAgentIpValidated($request->header('User-Agent'), $request->ip())) {
             UserAgentDnsValidationFailed::dispatch($request);
+
             return false;
         }
 
