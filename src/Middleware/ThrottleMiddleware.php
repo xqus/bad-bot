@@ -4,9 +4,11 @@ namespace xqus\BadBot\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Symfony\Component\HttpFoundation\Response;
 use xqus\BadBot\BadBotLog as Log;
+use xqus\BadBot\Events\RequestRateLimited;
 
 class ThrottleMiddleware
 {
@@ -17,6 +19,10 @@ class ThrottleMiddleware
      */
     public function handle(Request $request, Closure $next, int $perMinute = 5): Response
     {
+        if(Auth::check() && ! config('rate-limit-authenticated-requests', false)) {
+            return $next($request);
+        }
+
         if ($request->getRealMethod() === 'POST') {
             return $next($request);
         }
@@ -24,7 +30,7 @@ class ThrottleMiddleware
         $rateLimiterkey = 'bad-bot:'.hash('sha256', $request->ip());
         if (RateLimiter::tooManyAttempts($rateLimiterkey, $perMinute)) {
             if (! $this->isAllowedToSkipThrottleLimits($request)) {
-                Log::notice('Rate limit reached. Returning error 429');
+                RequestRateLimited::dispatch($request);
                 abort(429);
             }
 
