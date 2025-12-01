@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use xqus\BadBot\Events\RequestRateLimited;
 use xqus\BadBot\Events\RequestRateLimitSkipped;
 use xqus\BadBot\Events\UserAgentDnsValidationFailed;
+use xqus\BadBot\Exceptions\RequestRateLimitedException;
 
 class ThrottleMiddleware
 {
@@ -32,16 +33,14 @@ class ThrottleMiddleware
         if (RateLimiter::tooManyAttempts($rateLimiterkey, $perMinute)) {
             if (! $this->isAllowedToSkipThrottleLimits($request)) {
                 RequestRateLimited::dispatch($request);
-                abort(429);
+                throw new RequestRateLimitedException(429);
             }
 
             RequestRateLimitSkipped::dispatch($request);
-
             return $next($request);
         }
 
         RateLimiter::increment($rateLimiterkey);
-
         return $next($request);
     }
 
@@ -53,7 +52,6 @@ class ThrottleMiddleware
 
         if (! $this->userAgentIpValidated($request->header('User-Agent'), $request->ip())) {
             UserAgentDnsValidationFailed::dispatch($request);
-
             return false;
         }
 
@@ -77,7 +75,6 @@ class ThrottleMiddleware
         })->first();
 
         $resolvedHostname = gethostbyaddr($ipAddress);
-
         return str_contains(strtolower($resolvedHostname), strtolower($allowedHostname));
     }
 }

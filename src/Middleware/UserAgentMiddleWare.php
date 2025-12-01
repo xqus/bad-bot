@@ -3,10 +3,12 @@
 namespace xqus\BadBot\Middleware;
 
 use Closure;
+
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use xqus\BadBot\BadBotLog as Log;
+
 use xqus\BadBot\Events\RequestBlockedByUserAgent;
+use xqus\BadBot\Exceptions\UserAgentBlockedException;
 
 class UserAgentMiddleWare
 {
@@ -23,7 +25,7 @@ class UserAgentMiddleWare
             return $next($request);
         }
         RequestBlockedByUserAgent::dispatch($request);
-        abort(403);
+        throw new UserAgentBlockedException(403);
     }
 
     private function isKnownBadUserAgent(Request $request): bool
