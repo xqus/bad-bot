@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use xqus\BadBot\BadBotLog as Log;
+use xqus\BadBot\Events\RequestBlockedByUserAgent;
 
 class UserAgentMiddleWare
 {
@@ -21,8 +22,7 @@ class UserAgentMiddleWare
         if ($isKnownBadBot === false) {
             return $next($request);
         }
-
-        Log::notice('Request blocked based on user agent');
+        RequestBlockedByUserAgent::dispatch($request);
         abort(403);
     }
 
