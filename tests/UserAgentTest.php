@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
+use xqus\BadBot\Events\RequestBlockedByUserAgent;
 use xqus\BadBot\Middleware\UserAgentMiddleWare;
 
 test('requests are handled', function () {
@@ -46,5 +48,25 @@ test('a user agent is matched properly', function () {
         $response = $middleware->handle($request, $next);
     } catch (Exception $e) {
         $this->assertEquals(403, $e->getStatusCode());
+    }
+});
+
+
+test('an event is dispatched when a user agent is blocked', function () {
+    Event::fake();
+    
+    $middleware = new UserAgentMiddleWare;
+    $request = new Request;
+    $request->headers->set('User-Agent', 'Omgilibot');
+
+    $next = function () {
+        return response('This is a secret place');
+    };
+
+    try {
+        $response = $middleware->handle($request, $next);
+    } catch (Exception $e) {
+        $this->assertEquals(403, $e->getStatusCode());
+        Event::assertDispatched(RequestBlockedByUserAgent::class);
     }
 });
