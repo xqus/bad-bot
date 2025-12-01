@@ -31,8 +31,9 @@ test('a user agent on the deny list is blocked', function () {
     try {
         $response = $middleware->handle($request, $next);
     } catch (Exception $e) {
-        $this->assertEquals(403, $e->getStatusCode());
+        
     }
+    $this->assertEquals(403, $e->getStatusCode());
 });
 
 test('a user agent is matched properly', function () {
@@ -47,8 +48,9 @@ test('a user agent is matched properly', function () {
     try {
         $response = $middleware->handle($request, $next);
     } catch (Exception $e) {
-        $this->assertEquals(403, $e->getStatusCode());
+        
     }
+    $this->assertEquals(403, $e->getStatusCode());
 });
 
 
@@ -66,7 +68,8 @@ test('an event is dispatched when a user agent is blocked', function () {
     try {
         $response = $middleware->handle($request, $next);
     } catch (Exception $e) {
-        $this->assertEquals(403, $e->getStatusCode());
-        Event::assertDispatched(RequestBlockedByUserAgent::class);
+        
     }
+    $this->assertEquals(403, $e->getStatusCode());
+    Event::assertDispatched(RequestBlockedByUserAgent::class);
 });
