@@ -12,7 +12,6 @@ Route::get('/', function () {
     return 'hello-world';
 });
 
-
 Route::get('/rate-limit', function () {
     return 'hello-world';
 })->middleware(ThrottleMiddleware::class);
