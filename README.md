@@ -57,6 +57,7 @@ If you want to handle errors differently the following exceptions exists:
 ```
 xqus\BadBot\Exceptions\RequestRateLimitedException
 xqus\BadBot\Exceptions\UserAgentBlockedException
+xqus\BadBot\Exceptions\IpAddressBlockedException
 ```
 
 ## Testing
