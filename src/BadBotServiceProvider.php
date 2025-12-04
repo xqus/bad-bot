@@ -7,7 +7,6 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 use xqus\BadBot\Commands\AddOpenAiIPsToIPTable;
 use xqus\BadBot\Commands\BlockIP;
 use xqus\BadBot\Commands\ClearAllIPMarks;
-use xqus\BadBot\Commands\InstallRobotsTxt;
 
 class BadBotServiceProvider extends PackageServiceProvider
 {
@@ -17,10 +16,8 @@ class BadBotServiceProvider extends PackageServiceProvider
             ->name('bad-bot')
             ->hasRoutes('web')
             ->hasConfigFile()
-            ->hasViews()
             ->hasCommands([
                 BlockIP::class,
-                InstallRobotsTxt::class,
                 AddOpenAiIPsToIPTable::class,
                 ClearAllIPMarks::class,
             ]);
