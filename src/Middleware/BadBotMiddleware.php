@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use PhpIP\IPBlock;
 use Symfony\Component\HttpFoundation\Response;
+use xqus\BadBot\Exceptions\IpAddressBlockedException;
 
 class BadBotMiddleware
 {
@@ -23,7 +24,7 @@ class BadBotMiddleware
             return $next($request);
         }
 
-        abort(429);
+        throw new IpAddressBlockedException(429);
     }
 
     private function isKnownBadIPAddress(Request $request): bool
